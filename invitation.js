@@ -6,7 +6,6 @@ const skipIntro = introduction.querySelector('#skip-intro');
 const skipButton = skipIntro.querySelector('button');
 const main = document.querySelector('main');
 const page = document.documentElement;
-const urduNumber = new Intl.NumberFormat('ur-PK-u-nu-arabext', { minimumIntegerDigits: 2, useGrouping: false });
 
 function selectLanguage(language) {
   if (language !== 'ur') return;
@@ -14,7 +13,6 @@ function selectLanguage(language) {
   page.lang = 'ur';
   page.dir = 'rtl';
   document.title = 'اویس احمد · دعوتِ شادی';
-  document.querySelector('nav').setAttribute('aria-label', 'دعوت نامہ');
   introduction.setAttribute('aria-label', 'دعوت نامہ کھولیے');
   for (const element of document.querySelectorAll('[data-urdu]')) {
     element.textContent = element.dataset.urdu;
@@ -96,7 +94,7 @@ function updateCountdown() {
     seconds: remaining % 60
   };
   for (const [unit, value] of Object.entries(values)) {
-    countdownUnits[unit].textContent = page.lang === 'ur' ? urduNumber.format(value) : String(value).padStart(2, '0');
+    countdownUnits[unit].textContent = String(value).padStart(2, '0');
   }
   return true;
 }

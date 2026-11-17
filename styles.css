@@ -20,12 +20,9 @@ button { font: inherit; cursor: pointer; }
 a:focus-visible, button:focus-visible { outline: 2px solid #c67e38; outline-offset: 5px; }
 h1, h2, h3, p { margin: 0; }
 h1, h2, h3 { font-family: var(--serif); font-weight: 400; line-height: .94; }
-.masthead { min-height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 0 clamp(20px, 5vw, 84px); border-bottom: 1px solid var(--line); background: var(--wine-deep); }
-.brand { color: var(--gold); font: clamp(1.2rem, 3.5vw, 1.65rem)/1 var(--serif); text-decoration: none; white-space: nowrap; padding: 12px 0; }
-nav { display: flex; gap: clamp(10px, 3vw, 38px); }
-nav a, footer a { text-decoration: none; font-size: .8rem; padding: 12px 4px; }
-nav a:hover, footer a:hover { color: var(--gold); }
-.hero { display: grid; grid-template-columns: 1fr .92fr; max-width: 1680px; margin: auto; min-height: min(790px, calc(100svh - 72px)); }
+footer a { text-decoration: none; font-size: .8rem; padding: 12px 4px; }
+footer a:hover { color: var(--gold); }
+.hero { display: grid; grid-template-columns: 1fr .92fr; max-width: 1680px; margin: auto; min-height: min(790px, 100svh); }
 .intro { align-self: center; text-align: center; padding: clamp(52px, 7vw, 112px) 24px; }
 .eyebrow, .date, .event-date span { font-size: .72rem; line-height: 1.5; text-transform: uppercase; letter-spacing: .19em; font-weight: 700; }
 .eyebrow, .date { color: var(--gold); }
@@ -257,7 +254,7 @@ html.invitation-opening { overflow: hidden; }
   --urdu: "Urdu Typesetting", "Noto Naskh Arabic", Tahoma, sans-serif;
 }
 :lang(ur) body, .intro-button:lang(ur) { font-family: var(--urdu); }
-:lang(ur) :is(h1, h2, h3, .brand, .bride, .union, .art-name, .cover-name, .event-date strong, .digits strong) {
+:lang(ur) :is(h1, h2, h3, .bride, .union, .art-name, .cover-name, .event-date strong, .digits strong) {
   font-family: var(--urdu);
   line-height: 1.3;
 }
