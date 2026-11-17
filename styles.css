@@ -145,7 +145,7 @@ html.invitation-opening { overflow: hidden; }
   overflow: hidden;
   box-shadow: 0 0 100px #070205be;
 }
-.stage-art, .intro-cover, .cover-glow, .stage-drape {
+.stage-art, .intro-cover, .cover-glow {
   position: absolute;
   inset: 0;
 }
@@ -215,42 +215,19 @@ html.invitation-opening { overflow: hidden; }
 .intro-button:hover { background: #61243a; }
 .intro-button:focus-visible { outline-color: #fff0c3; }
 
-.stage-drape {
-  inset: 28% 8% 10% auto;
-  width: 43%;
-  background:
-    linear-gradient(180deg, #1c040b10, #29051090),
-    repeating-linear-gradient(85deg, #3e0b18 0%, #5f1224 6%, #981f35 12%, #5e1224 20%, #3e0b18 24%);
-  clip-path: polygon(0 0, 55% 0, 76% 5%, 91% 14%, 96% 25%, 93% 39%, 87% 55%, 89% 73%, 100% 98%, 78% 100%, 54% 99%, 27% 100%, 0 98%);
-  box-shadow: inset 0 0 40px #1d040baf;
-  transform-origin: top right;
-}
-.stage-drape-left {
-  inset-inline: 9% auto;
-  clip-path: polygon(100% 0, 45% 0, 24% 5%, 9% 14%, 4% 25%, 7% 39%, 13% 55%, 11% 73%, 0 98%, 22% 100%, 46% 99%, 73% 100%, 100% 98%);
-  transform-origin: top left;
-}
-.invitation-intro.is-revealing { animation: intro-fade 3s ease both; }
+.invitation-intro.is-revealing { animation: intro-fade 2.2s ease both; }
 .is-revealing .intro-cover {
   animation: cover-split 1.25s cubic-bezier(.55,.05,.23,1) both;
 }
 .is-revealing .cover-copy { animation: cover-copy-out .35s ease both; }
-.is-revealing .stage-drape-left {
-  animation: stage-drape-left 1.2s 1.12s cubic-bezier(.38,.02,.22,1) both;
-}
-.is-revealing .stage-drape-right {
-  animation: stage-drape-right 1.2s 1.12s cubic-bezier(.38,.02,.22,1) both;
-}
 
 @keyframes cover-split {
   0% { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 0 0, 50% 0, 50% 100%, 50% 100%, 50% 0, 0 0); }
   100% { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 0 0, 0 0, 0 100%, 100% 100%, 100% 0, 0 0); }
 }
-@keyframes stage-drape-left { to { transform: translateX(-12%) skewY(-11deg) scaleX(.16); opacity: 0; } }
-@keyframes stage-drape-right { to { transform: translateX(12%) skewY(11deg) scaleX(.16); opacity: 0; } }
 @keyframes cover-copy-out { to { opacity: 0; transform: scale(1.04); } }
 @keyframes cover-light { from { opacity: 0; } to { opacity: 1; } }
-@keyframes intro-fade { 0%, 79% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes intro-fade { 0%, 73% { opacity: 1; } 100% { opacity: 0; } }
 
 @media (max-width: 540px) {
   .intro-scene { width: 100%; }

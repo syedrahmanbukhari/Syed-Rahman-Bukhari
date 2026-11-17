@@ -49,7 +49,7 @@ if (typeof introduction.showModal === 'function') {
       languageChoices.hidden = true;
       skipIntro.hidden = false;
       skipButton.focus({ preventScroll: true });
-      revealTimeout = window.setTimeout(() => introduction.close(), 3200);
+      revealTimeout = window.setTimeout(() => introduction.close(), 2400);
     });
   }
 
