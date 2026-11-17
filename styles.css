@@ -185,16 +185,21 @@ html.invitation-opening { overflow: hidden; }
   text-transform: uppercase;
 }
 .cover-name { font: 400 clamp(3.2rem, min(13vw, 9svh), 6.4rem)/.91 var(--serif); }
-.intro-button {
+.intro-actions {
   position: absolute;
   z-index: 3;
   inset: auto auto max(7svh, env(safe-area-inset-bottom)) 50%;
   translate: -50% 0;
   display: flex;
+  gap: .6rem;
+  direction: ltr;
+}
+.intro-button {
+  display: inline-flex;
   align-items: center;
-  gap: .65em;
+  justify-content: center;
   min-height: 48px;
-  padding: .7rem 1.15rem;
+  padding: .7rem clamp(.7rem, 3vw, 1.15rem);
   border: 1px solid #e4bf83ac;
   border-radius: 3px;
   background: #2e0a17ef;
@@ -246,4 +251,18 @@ html.invitation-opening { overflow: hidden; }
 
 @media (max-width: 540px) {
   .intro-scene { width: 100%; }
+}
+
+:lang(ur) {
+  --urdu: "Urdu Typesetting", "Noto Naskh Arabic", Tahoma, sans-serif;
+}
+:lang(ur) body, .intro-button:lang(ur) { font-family: var(--urdu); }
+:lang(ur) :is(h1, h2, h3, .brand, .bride, .union, .art-name, .cover-name, .event-date strong, .digits strong) {
+  font-family: var(--urdu);
+  line-height: 1.3;
+}
+:lang(ur) :is(.eyebrow, .date, .event-date span, .cover-caption) { letter-spacing: normal; }
+:lang(ur) .event + .event { border-left: 0; border-inline-start: 1px solid #b48c6768; }
+@media (max-width: 700px) {
+  :lang(ur) .event + .event { border-inline-start: 0; }
 }

@@ -1,16 +1,36 @@
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 const introduction = document.querySelector('.invitation-intro');
-const introButton = introduction.querySelector('.intro-button');
+const languageButtons = introduction.querySelectorAll('[data-language]');
+const languageChoices = languageButtons[0].parentElement;
+const skipIntro = introduction.querySelector('#skip-intro');
+const skipButton = skipIntro.querySelector('button');
 const main = document.querySelector('main');
+const page = document.documentElement;
+const urduNumber = new Intl.NumberFormat('ur-PK-u-nu-arabext', { minimumIntegerDigits: 2, useGrouping: false });
+
+function selectLanguage(language) {
+  if (language !== 'ur') return;
+
+  page.lang = 'ur';
+  page.dir = 'rtl';
+  document.title = 'اویس احمد · دعوتِ شادی';
+  document.querySelector('nav').setAttribute('aria-label', 'دعوت نامہ');
+  introduction.setAttribute('aria-label', 'دعوت نامہ کھولیے');
+  for (const element of document.querySelectorAll('[data-urdu]')) {
+    element.textContent = element.dataset.urdu;
+  }
+  skipButton.textContent = 'متحرک منظر چھوڑیں';
+  updateCountdown();
+}
 
 if (typeof introduction.showModal === 'function') {
   let revealTimeout;
   introduction.showModal();
-  document.documentElement.classList.add('invitation-opening');
+  page.classList.add('invitation-opening');
 
   introduction.addEventListener('close', () => {
     window.clearTimeout(revealTimeout);
-    document.documentElement.classList.remove('invitation-opening');
+    page.classList.remove('invitation-opening');
     main.focus({ preventScroll: true });
   });
 
@@ -20,16 +40,24 @@ if (typeof introduction.showModal === 'function') {
     }
   });
 
-  introButton.addEventListener('click', () => {
-    if (reducedMotion.matches || introduction.classList.contains('is-revealing')) {
-      introduction.close();
-      return;
-    }
-    introduction.classList.add('is-revealing');
-    introButton.textContent = 'Skip animation';
-    revealTimeout = window.setTimeout(() => introduction.close(), 3200);
-  });
+  for (const button of languageButtons) {
+    button.addEventListener('click', () => {
+      selectLanguage(button.dataset.language);
+      if (reducedMotion.matches) {
+        introduction.close();
+        return;
+      }
+      introduction.classList.add('is-revealing');
+      languageChoices.hidden = true;
+      skipIntro.hidden = false;
+      skipButton.focus({ preventScroll: true });
+      revealTimeout = window.setTimeout(() => introduction.close(), 3200);
+    });
+  }
+
+  skipButton.addEventListener('click', () => introduction.close());
 }
+
 
 if (!reducedMotion.matches && 'IntersectionObserver' in window) {
   const observer = new IntersectionObserver((items) => {
@@ -68,7 +96,7 @@ function updateCountdown() {
     seconds: remaining % 60
   };
   for (const [unit, value] of Object.entries(values)) {
-    countdownUnits[unit].textContent = String(value).padStart(2, '0');
+    countdownUnits[unit].textContent = page.lang === 'ur' ? urduNumber.format(value) : String(value).padStart(2, '0');
   }
   return true;
 }
@@ -89,12 +117,16 @@ calendarButton.addEventListener('click', () => {
     { id: 'baraat', title: 'Baraat Departure', start: '20261205T070000Z' },
     { id: 'walima', title: 'Walima Reception', start: '20261206T080000Z', end: '20261206T100000Z', location: 'Taj Mahal Marriage Hall' }
   ];
+  const urduTitles = ['رسمِ مہندی', 'سہرا بندی', 'روانگیِ بارات', 'دعوتِ ولیمہ'];
+  const urduLocations = { mehndi: 'رہائش گاہِ شہزاد احمد', walima: 'تاج محل میرج ہال' };
   const lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Awais Ahmad Wedding//Invitation//EN', 'CALSCALE:GREGORIAN'];
-  for (const entry of entries) {
+  for (const [index, entry] of entries.entries()) {
+    const title = page.lang === 'ur' ? urduTitles[index] : entry.title;
+    const location = page.lang === 'ur' ? urduLocations[entry.id] : entry.location;
     lines.push('BEGIN:VEVENT', `UID:${entry.id}-awais-ahmad-december-2026`, `DTSTAMP:${timestamp}`,
-      `DTSTART:${entry.start}`, `SUMMARY:${entry.title}`);
+      `DTSTART:${entry.start}`, `SUMMARY:${title}`);
     if (entry.end) lines.push(`DTEND:${entry.end}`);
-    if (entry.location) lines.push(`LOCATION:${entry.location}`);
+    if (location) lines.push(`LOCATION:${location}`);
     lines.push('END:VEVENT');
   }
   lines.push('END:VCALENDAR', '');
