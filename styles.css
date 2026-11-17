@@ -22,19 +22,47 @@ h1, h2, h3, p { margin: 0; }
 h1, h2, h3 { font-family: var(--serif); font-weight: 400; line-height: .94; }
 footer a { text-decoration: none; font-size: .8rem; padding: 12px 4px; }
 footer a:hover { color: var(--gold); }
-.hero { display: grid; grid-template-columns: 1fr .92fr; max-width: 1680px; margin: auto; min-height: min(790px, 100svh); }
-.intro { align-self: center; text-align: center; padding: clamp(52px, 7vw, 112px) 24px; }
+.hero {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  place-items: center;
+  min-height: 100svh;
+  background: var(--wine);
+}
+.hero-stage {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  width: min(100%, max(540px, 80svh), 850px);
+  margin-inline: auto;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, transparent 13%, #21081278 38%, #21081283 72%, #230d16 100%),
+    url('wedding-stage.webp') center top / cover;
+  mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+}
+.intro {
+  width: min(100%, 680px);
+  padding: clamp(160px, 29svh, 260px) 24px clamp(56px, 9svh, 112px);
+  text-align: center;
+  text-shadow: 0 2px 18px #170810, 0 1px 3px #170810;
+}
+.intro .button { text-shadow: none; }
+@media (min-width: 701px) {
+  .intro { padding-top: clamp(185px, 32svh, 310px); }
+}
 .eyebrow, .date, .event-date span { font-size: .72rem; line-height: 1.5; text-transform: uppercase; letter-spacing: .19em; font-weight: 700; }
 .eyebrow, .date { color: var(--gold); }
 .blessing { font-size: .65rem; max-width: 36ch; margin: auto; }
 .ornament { display: flex; justify-content: center; align-items: center; gap: .75rem; color: #926437; margin: .85rem auto 1.05rem; }
 .ornament::before, .ornament::after, .union::before, .union::after { content: ''; width: 35px; height: 1px; background: currentColor; opacity: .5; }
 .hero .ornament, .closing .ornament { color: var(--gold); }
-h1 { font-size: clamp(3.85rem, 7.35vw, 8rem); margin: .12em 0 .08em; }
+h1 { font-size: clamp(3.45rem, 8vw, 6rem); margin: .12em 0 .08em; }
 .parent, .intro-copy { color: var(--muted); }
 .parent { font-size: .88rem; }
 .union { display: flex; justify-content: center; align-items: center; gap: .65rem; color: var(--gold); font: italic 1.65rem/1 var(--serif); margin: .8rem 0; }
-.bride { font: 400 clamp(2.35rem, 4.05vw, 4.65rem)/.98 var(--serif); }
+.bride { font: 400 clamp(2.05rem, 4.75vw, 3.6rem)/.98 var(--serif); }
 .intro-copy { max-width: 35ch; margin: 1.45rem auto 1.1rem; font-size: .93rem; }
 .date { margin-bottom: 1.2rem; }
 .button { display: inline-flex; align-items: center; justify-content: center; gap: .75rem; min-height: 48px; padding: .7rem 1.2rem; border: 1px solid transparent; border-radius: 3px; text-decoration: none; font-weight: 700; font-size: .82rem; transition: background .25s, color .25s, transform .25s; }
@@ -43,16 +71,10 @@ h1 { font-size: clamp(3.85rem, 7.35vw, 8rem); margin: .12em 0 .08em; }
 .primary:hover { background: #fbe0ac; }
 .outline { border-color: #956a45; color: #482133; background: transparent; }
 .outline:hover { background: #ead8bd; }
-.art { position: relative; isolation: isolate; overflow: hidden; display: grid; place-items: center; min-height: 34rem; background: radial-gradient(ellipse at center, #642b3e, #230d16 72%); color: var(--gold); }
-.art::before { content: ''; position: absolute; inset: 0; z-index: -2; background: linear-gradient(0deg, #1b0a1060, #1b0a102b), url('wedding-arch.png') center / cover; animation: settle 1.7s cubic-bezier(.2,.65,.2,1) both; }
-.art-frame { position: absolute; inset: 20px; border: 1px solid #eed19d72; pointer-events: none; }
-.art-frame::after { content: ''; position: absolute; inset: 5px; border: 1px solid #eed19d34; }
-.art-center { text-align: center; display: grid; justify-items: center; gap: .35rem; padding: 1.3rem; text-shadow: 0 2px 24px #110508, 0 1px 3px #110508; }
 .sparkles { position: absolute; inset: 0; pointer-events: none; }
 .sparkles i { position: absolute; left: var(--x); top: var(--y); width: 3px; height: 3px; border-radius: 50%; background: #ffe1aa; box-shadow: 0 0 9px 2px #f8c27c; animation: drift 4s var(--delay) ease-in-out 3 both; }
 @keyframes drift { 0%,100% { opacity: 0; transform: translateY(16px); } 50% { opacity: .75; } 100% { transform: translateY(-30px); } }
 @keyframes enter { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes settle { from { opacity: 0; transform: scale(1.07); } to { opacity: 1; transform: scale(1); } }
 .schedule { color: #321620; background: #f8efdf; padding: clamp(65px, 9vw, 120px) 24px; }
 .section-heading { text-align: center; margin-bottom: clamp(32px, 6vw, 72px); }
 h2 { font-size: clamp(3.2rem, 6.4vw, 6.8rem); }
@@ -96,10 +118,6 @@ footer { border-top: 1px solid var(--line); padding: 14px clamp(20px, 5vw, 84px)
   .event-date time { gap: 0 .4rem; }
 }
 @media (max-width: 700px) {
-  .hero { grid-template-columns: 1fr; }
-  .intro { padding-top: 45px; padding-bottom: 42px; }
-  .art { min-height: clamp(300px, 94vw, 470px); }
-  .art-frame { inset: 13px; }
   .events { grid-template-columns: 1fr; max-width: 470px; }
   .event { padding: 22px 5px; display: grid; grid-template-columns: 5.2rem 1fr; gap: .8rem; }
   .event + .event { border-left: 0; border-top: 1px solid #b48c6768; }
@@ -108,12 +126,6 @@ footer { border-top: 1px solid var(--line); padding: 14px clamp(20px, 5vw, 84px)
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
-}
-
-.art-name {
-  max-width: 8ch;
-  color: var(--gold);
-  font: 400 clamp(3.5rem, 8vw, 8.25rem)/.88 var(--serif);
 }
 
 html.invitation-opening { overflow: hidden; }
@@ -129,39 +141,38 @@ html.invitation-opening { overflow: hidden; }
   overflow: hidden;
   border: 0;
   padding: 0;
-  background: radial-gradient(ellipse, #35121d, #10050a 78%);
+  background: transparent;
   color: var(--gold);
 }
 .invitation-intro[open] { display: grid; place-items: center; }
 .invitation-intro::backdrop { background: transparent; }
 
-.intro-scene {
+.intro-scene, .intro-cover, .cover-glow {
   position: absolute;
   inset: 0;
-  margin: auto;
-  width: min(100%, 73svh, 650px);
-  height: 100%;
-  isolation: isolate;
-  overflow: hidden;
-  box-shadow: 0 0 100px #070205be;
-}
-.stage-art, .intro-cover, .cover-glow {
-  position: absolute;
-  inset: 0;
-}
-.stage-art {
-  background: #511325 url('wedding-stage.webp') center / cover;
 }
 .intro-cover {
+  isolation: isolate;
   display: grid;
   place-items: center;
-  background: linear-gradient(0deg, #12050980, #1b050b10 60%), url('wedding-arch.png') center / cover;
+  background: radial-gradient(ellipse, #35121d, #10050a 78%);
   clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
 }
+.intro-cover::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  width: min(100%, 73svh, 650px);
+  margin-inline: auto;
+  background: linear-gradient(0deg, #12050980, #1b050b10 60%), url('wedding-arch.png') center / cover;
+  box-shadow: 0 0 100px #070205be;
+}
+
 .intro-cover::after {
   content: '';
   position: absolute;
-  inset: max(14px, 3%);
+  inset: max(14px, 3%) max(14px, calc((100% - min(100%, 73svh, 650px)) / 2 + 14px));
   border: 1px solid #e4bf8355;
   pointer-events: none;
 }
@@ -215,7 +226,6 @@ html.invitation-opening { overflow: hidden; }
 .intro-button:hover { background: #61243a; }
 .intro-button:focus-visible { outline-color: #fff0c3; }
 
-.invitation-intro.is-revealing { animation: intro-fade 2.2s ease both; }
 .is-revealing .intro-cover {
   animation: cover-split 1.25s cubic-bezier(.55,.05,.23,1) both;
 }
@@ -227,17 +237,18 @@ html.invitation-opening { overflow: hidden; }
 }
 @keyframes cover-copy-out { to { opacity: 0; transform: scale(1.04); } }
 @keyframes cover-light { from { opacity: 0; } to { opacity: 1; } }
-@keyframes intro-fade { 0%, 73% { opacity: 1; } 100% { opacity: 0; } }
 
 @media (max-width: 540px) {
-  .intro-scene { width: 100%; }
+  .hero-stage { mask-image: none; }
+  .intro-cover::before { width: 100%; }
+  .intro-cover::after { inset-inline: 14px; }
 }
 
 :lang(ur) {
   --urdu: "Urdu Typesetting", "Noto Naskh Arabic", Tahoma, sans-serif;
 }
 :lang(ur) body, .intro-button:lang(ur) { font-family: var(--urdu); }
-:lang(ur) :is(h1, h2, h3, .bride, .union, .art-name, .cover-name, .event-date strong, .digits strong) {
+:lang(ur) :is(h1, h2, h3, .bride, .union, .cover-name, .event-date strong, .digits strong) {
   font-family: var(--urdu);
   line-height: 1.3;
 }

@@ -23,6 +23,7 @@ function selectLanguage(language) {
 
 if (typeof introduction.showModal === 'function') {
   let revealTimeout;
+  window.scrollTo({ top: 0, behavior: 'instant' });
   introduction.showModal();
   page.classList.add('invitation-opening');
 
@@ -33,7 +34,7 @@ if (typeof introduction.showModal === 'function') {
   });
 
   introduction.addEventListener('animationend', (event) => {
-    if (event.target === introduction && event.animationName === 'intro-fade') {
+    if (event.animationName === 'cover-split') {
       introduction.close();
     }
   });
@@ -49,7 +50,7 @@ if (typeof introduction.showModal === 'function') {
       languageChoices.hidden = true;
       skipIntro.hidden = false;
       skipButton.focus({ preventScroll: true });
-      revealTimeout = window.setTimeout(() => introduction.close(), 2400);
+      revealTimeout = window.setTimeout(() => introduction.close(), 1450);
     });
   }
 
@@ -59,7 +60,7 @@ if (typeof introduction.showModal === 'function') {
 
 if (!reducedMotion.matches && 'IntersectionObserver' in window) {
   const text = main.querySelectorAll([
-    '.intro > *', '.art-center', '.section-heading > *', '.event-date',
+    '.intro > *', '.section-heading > *', '.event-date',
     '.event-body > *', '.calendar-actions', '.closing > *'
   ].join(', '));
   const observer = new IntersectionObserver((items) => {
