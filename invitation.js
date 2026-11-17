@@ -58,14 +58,26 @@ if (typeof introduction.showModal === 'function') {
 
 
 if (!reducedMotion.matches && 'IntersectionObserver' in window) {
+  const text = main.querySelectorAll([
+    '.intro > *', '.art-center', '.section-heading > *', '.event-date',
+    '.event-body > *', '.calendar-actions', '.closing > *'
+  ].join(', '));
   const observer = new IntersectionObserver((items) => {
     for (const item of items) {
       if (!item.isIntersecting) continue;
-      item.target.classList.add('visible');
+      item.target.classList.replace('scroll-text-pending', 'scroll-text-visible');
       observer.unobserve(item.target);
     }
-  }, { threshold: 0.2 });
-  document.querySelectorAll('.reveal').forEach((element) => observer.observe(element));
+  }, { rootMargin: '0px 0px -5% 0px', threshold: 0.12 });
+
+  text.forEach((element) => element.classList.add('scroll-text-pending'));
+  const observeText = () => text.forEach((element) => observer.observe(element));
+  if (introduction.open) {
+    introduction.addEventListener('close', observeText, { once: true });
+  } else {
+    observeText();
+  }
+
 
   const sparkles = document.querySelector('.sparkles');
   for (let index = 0; index < 20; index += 1) {

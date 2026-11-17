@@ -47,10 +47,7 @@ h1 { font-size: clamp(3.85rem, 7.35vw, 8rem); margin: .12em 0 .08em; }
 .art::before { content: ''; position: absolute; inset: 0; z-index: -2; background: linear-gradient(0deg, #1b0a1060, #1b0a102b), url('wedding-arch.png') center / cover; animation: settle 1.7s cubic-bezier(.2,.65,.2,1) both; }
 .art-frame { position: absolute; inset: 20px; border: 1px solid #eed19d72; pointer-events: none; }
 .art-frame::after { content: ''; position: absolute; inset: 5px; border: 1px solid #eed19d34; }
-.art-center { text-align: center; display: grid; justify-items: center; gap: .35rem; padding: 1.3rem; animation: enter 1.1s .2s both; text-shadow: 0 2px 24px #110508, 0 1px 3px #110508; }
-.intro > * { animation: enter .75s backwards; }
-.intro > :nth-child(n+4) { animation-delay: .12s; }
-.intro > :nth-child(n+8) { animation-delay: .25s; }
+.art-center { text-align: center; display: grid; justify-items: center; gap: .35rem; padding: 1.3rem; text-shadow: 0 2px 24px #110508, 0 1px 3px #110508; }
 .sparkles { position: absolute; inset: 0; pointer-events: none; }
 .sparkles i { position: absolute; left: var(--x); top: var(--y); width: 3px; height: 3px; border-radius: 50%; background: #ffe1aa; box-shadow: 0 0 9px 2px #f8c27c; animation: drift 4s var(--delay) ease-in-out 3 both; }
 @keyframes drift { 0%,100% { opacity: 0; transform: translateY(16px); } 50% { opacity: .75; } 100% { transform: translateY(-30px); } }
@@ -84,7 +81,16 @@ h3 { font-size: clamp(2.2rem, 3.4vw, 3.75rem); margin: .45em 0 .35em; }
 .digits strong { font: 400 clamp(2.5rem, 6vw, 4rem)/1 var(--serif); font-variant-numeric: tabular-nums; }
 .digits span { color: var(--muted); font-size: .7rem; }
 footer { border-top: 1px solid var(--line); padding: 14px clamp(20px, 5vw, 84px); display: flex; align-items: center; justify-content: space-between; gap: 12px; color: var(--muted); font-size: .78rem; }
-.reveal.visible { animation: enter .7s both; }
+@media (prefers-reduced-motion: no-preference) {
+  .scroll-text-pending:not(:focus-within) { opacity: 0; }
+
+  .scroll-text-visible:not(:focus-within) {
+    animation: enter .65s cubic-bezier(.22, .65, .28, 1) backwards;
+  }
+
+  .scroll-text-visible:nth-child(2n):not(:focus-within) { animation-delay: 70ms; }
+  .scroll-text-visible:nth-child(3n):not(:focus-within) { animation-delay: 125ms; }
+}
 @media (max-width: 880px) {
   .event { padding-inline: 16px; }
   .event-date time { gap: 0 .4rem; }
